@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sulit Finds by Eveaya — Presyo Check Muna Bago Bili</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&family=Quicksand:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF3E7;
+    --cream-deep:#F3E7D6;
+    --blush:#F3C9C0;
+    --blush-deep:#E39C90;
+    --sage:#A9B79A;
+    --sage-deep:#7C8B6F;
+    --ink:#4A3E3A;
+    --ink-soft:#7A6D67;
+    --gold:#E3B77D;
+    --radius:18px;
+    --shadow: 0 10px 28px rgba(126,90,74,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Quicksand', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .price{font-family:'Space Mono', monospace;}
+  .display{font-family:'Fraunces', serif; font-weight:600;}
+
+  /* ===== TOP MARQUEE ===== */
+  .marquee-wrap{
+    background:var(--blush-deep);
+    color:#fff;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .marquee{
+    display:inline-block;
+    padding:9px 0;
+    animation:scroll 24s linear infinite;
+    font-family:'Quicksand',sans-serif;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.03em;
+  }
+  .marquee span{margin-right:44px;}
+  @keyframes scroll{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee{animation:none;}
+  }
+
+  /* ===== HEADER ===== */
+  header{
+    background:rgba(251,243,231,0.92);
+    backdrop-filter:blur(6px);
+    padding:20px 28px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+    border-bottom:1px solid var(--cream-deep);
+  }
+  .logo{display:flex; align-items:center; gap:10px;}
+  .logo-mark{
+    width:36px;height:36px;
+    border-radius:50%;
+    background:var(--sage);
+    color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:16px;
+  }
+  .logo-text{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-style:italic;
+    font-size:21px;
+    color:var(--ink);
+  }
+  nav{display:flex; gap:30px;}
+  nav a{
+    color:var(--ink);
+    text-decoration:none;
+    font-weight:600;
+    font-size:14px;
+  }
+  nav a:hover, nav a:focus-visible{color:var(--blush-deep); outline:none;}
+  nav a:focus-visible{outline:2px solid var(--sage); outline-offset:4px; border-radius:4px;}
+
+  .btn{
+    font-family:'Quicksand', sans-serif;
+    font-weight:700;
+    font-size:14px;
+    background:var(--blush-deep);
+    color:#fff;
+    border:none;
+    border-radius:999px;
+    padding:14px 28px;
+    box-shadow:var(--shadow);
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-block;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:hover{
+    transform:translateY(-2px);
+    background:var(--sage-deep);
+    box-shadow:0 14px 30px rgba(124,139,111,0.28);
+  }
+  .btn:focus-visible{outline:3px solid var(--gold); outline-offset:3px;}
+  .btn-ghost{
+    background:transparent;
+    border:1.5px solid var(--ink);
+    color:var(--ink);
+    box-shadow:none;
+    padding:10px 20px;
+  }
+  .btn-ghost:hover{background:var(--ink); color:var(--cream);}
+
+  /* ===== HERO ===== */
+  .hero{
+    padding:90px 24px 70px;
+    text-align:center;
+    position:relative;
+    background:
+      radial-gradient(circle at 18% 25%, rgba(169,183,154,0.28), transparent 42%),
+      radial-gradient(circle at 82% 70%, rgba(243,201,192,0.35), transparent 45%);
+  }
+  .hero-tag{
+    display:inline-block;
+    background:var(--sage);
+    color:#fff;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.08em;
+    border-radius:999px;
+    padding:7px 16px;
+    margin-bottom:24px;
+  }
+  .hero h1{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(38px, 6.5vw, 74px);
+    line-height:1.05;
+    margin:0 0 22px;
+    color:var(--ink);
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--blush-deep);
+  }
+  .hero p{
+    max-width:540px;
+    margin:0 auto 34px;
+    font-size:17px;
+    line-height:1.6;
+    color:var(--ink-soft);
+    font-weight:500;
+  }
+  .platform-strip{
+    margin-top:44px;
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .platform-chip{
+    font-size:12px;
+    font-weight:700;
+    border-radius:999px;
+    padding:8px 16px;
+    background:#fff;
+    color:var(--ink);
+    box-shadow:0 4px 12px rgba(126,90,74,0.10);
+  }
+
+  /* ===== SECTION HEADER ===== */
+  .section{padding:70px 24px;}
+  .section-inner{max-width:1080px; margin:0 auto;}
+  .section-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    margin-bottom:38px;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .eyebrow{
+    font-size:12px;
+    font-weight:700;
+    color:var(--blush-deep);
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    margin:0 0 8px;
+  }
+  .section-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(26px,4vw,38px);
+    margin:0;
+    color:var(--ink);
+  }
+  .section-sub{
+    max-width:300px;
+    font-size:14px;
+    color:var(--ink-soft);
+    font-weight:500;
+    text-align:right;
+  }
+
+  /* ===== CARDS ===== */
+  .receipt-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:26px;
+  }
+  .receipt{
+    background:#fff;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .receipt:hover{
+    transform:translateY(-5px);
+    box-shadow:0 18px 34px rgba(126,90,74,0.20);
+  }
+  .receipt-photo{
+    height:170px;
+    background:linear-gradient(135deg, var(--blush) 0%, var(--cream-deep) 100%);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    color:var(--ink-soft);
+    position:relative;
+  }
+  .stamp{
+    position:absolute;
+    top:14px;
+    right:14px;
+    background:var(--sage);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    padding:5px 14px;
+    border-radius:999px;
+    box-shadow:0 4px 10px rgba(124,139,111,0.35);
+  }
+  .receipt-body{padding:20px 22px 6px;}
+  .receipt-body h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:19px;
+    margin:0 0 8px;
+    color:var(--ink);
+  }
+  .receipt-body p{
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.55;
+    margin:0 0 16px;
+    font-weight:500;
+  }
+  .price-list{
+    border-top:1px dashed var(--cream-deep);
+    padding-top:12px;
+  }
+  .price-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:13px;
+    padding:6px 0;
+    font-weight:600;
+  }
+  .price-row .amt{font-family:'Space Mono',monospace; font-weight:700;}
+  .price-row.best .plat, .price-row.best .amt{color:var(--sage-deep);}
+  .best-badge{
+    font-size:9px;
+    background:var(--sage);
+    color:#fff;
+    padding:3px 8px;
+    border-radius:999px;
+    margin-left:6px;
+  }
+  .receipt-foot{
+    border-top:1px solid var(--cream-deep);
+    margin-top:14px;
+    padding:14px 22px 18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .receipt-foot a{
+    font-size:12px;
+    font-weight:700;
+    color:var(--blush-deep);
+    text-decoration:none;
+  }
+  .receipt-foot a:hover{color:var(--sage-deep);}
+
+  /* ===== CATEGORY GRID ===== */
+  .cat-grid{
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:16px;
+  }
+  .cat-card{
+    background:#fff;
+    border-radius:var(--radius);
+    padding:28px 16px;
+    text-align:center;
+    cursor:pointer;
+    box-shadow:0 6px 18px rgba(126,90,74,0.10);
+    transition:transform .15s ease, background .15s ease;
+  }
+  .cat-card:hover{transform:translateY(-4px); background:var(--blush);}
+  .cat-emoji{font-size:26px; display:block; margin-bottom:10px;}
+  .cat-card span.label{
+    font-size:12px;
+    font-weight:700;
+    color:var(--ink);
+    letter-spacing:0.02em;
+  }
+
+  /* ===== SALE BAND ===== */
+  .sale-band{
+    background:linear-gradient(135deg, var(--sage) 0%, var(--sage-deep) 100%);
+    padding:50px 24px;
+    text-align:center;
+    color:#fff;
+    border-radius:32px;
+    margin:0 24px;
+  }
+  .sale-band .eyebrow{color:var(--gold);}
+  .sale-band h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:clamp(24px,4vw,34px);
+    margin:8px 0 14px;
+  }
+  .sale-band p{
+    max-width:460px;
+    margin:0 auto 24px;
+    font-size:15px;
+    font-weight:500;
+    opacity:0.95;
+  }
+  .sale-band .btn{background:#fff; color:var(--sage-deep);}
+  .sale-band .btn:hover{background:var(--cream); color:var(--sage-deep);}
+
+  /* ===== ABOUT / DISCLOSURE ===== */
+  .about{padding:64px 24px;}
+  .about-inner{max-width:640px; margin:0 auto; text-align:center;}
+  .about h2{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    font-size:27px;
+    margin:0 0 16px;
+  }
+  .about p{
+    font-size:14px;
+    line-height:1.65;
+    color:var(--ink-soft);
+    font-weight:500;
+    margin:0 0 14px;
+  }
+  .disclosure{
+    background:#fff;
+    border-radius:14px;
+    padding:18px 22px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-top:22px;
+    text-align:left;
+    box-shadow:0 6px 18px rgba(126,90,74,0.10);
+  }
+
+  /* ===== FOOTER ===== */
+  footer{
+    background:var(--ink);
+    color:var(--cream);
+    padding:40px 24px 28px;
+    text-align:center;
+    margin-top:60px;
+  }
+  footer .logo-text{color:var(--blush);}
+  footer p{font-size:12px; color:#C9BDB6; margin-top:12px; letter-spacing:0.03em;}
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:900px){
+    .receipt-grid{grid-template-columns:1fr;}
+    .cat-grid{grid-template-columns:repeat(3,1fr);}
+    nav{display:none;}
+    .section-head{flex-direction:column; align-items:flex-start;}
+    .section-sub{text-align:left;}
+    .sale-band{margin:0 12px; border-radius:24px;}
+  }
+  @media (max-width:480px){
+    .cat-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+  <div class="marquee-wrap">
+    <div class="marquee">
+      <span>🌸 SHOPEE 8.8 — LIVE NA</span>
+      <span>🌿 LAZADA PAYDAY SALE — JULY 27–28</span>
+      <span>🍑 TIKTOK SHOP FLASH DEAL — 6PM MAMAYA</span>
+      <span>🌸 SHOPEE 8.8 — LIVE NA</span>
+      <span>🌿 LAZADA PAYDAY SALE — JULY 27–28</span>
+      <span>🍑 TIKTOK SHOP FLASH DEAL — 6PM MAMAYA</span>
+    </div>
+  </div>
+
+  <header>
+    <div class="logo">
+      <div class="logo-mark">₱</div>
+      <div class="logo-text">Sulit Finds <span style="font-style:normal; font-weight:500; font-size:13px; color:var(--ink-soft); vertical-align:middle;">by Eveaya</span></div>
+    </div>
+    <nav>
+      <a href="#fashion">Fashion</a>
+      <a href="#beauty">Beauty</a>
+      <a href="#home">Home</a>
+      <a href="#gadgets">Gadgets</a>
+      <a href="#sale">Sale Alerts</a>
+    </nav>
+    <a href="#top-finds" class="btn btn-ghost">Tingnan →</a>
+  </header>
+
+  <section class="hero">
+    <span class="hero-tag">★ PRESYO-CHECKED, LINGGO-LINGGO</span>
+    <h1>Bago Ka <em>Mag-checkout</em>,<br>Dito Ka Muna.</h1>
+    <p>Kino-compare namin ang presyo ng trending finds sa Shopee, Lazada, TikTok Shop, at Shein — para hindi ka na kailangang mag-switch ng apps para malaman kung saan pinakamura.</p>
+    <a href="#top-finds" class="btn">Tingnan ang Deals Ngayong Linggo →</a>
+    <div class="platform-strip">
+      <span class="platform-chip">SHOPEE</span>
+      <span class="platform-chip">LAZADA</span>
+      <span class="platform-chip">TIKTOK SHOP</span>
+      <span class="platform-chip">SHEIN</span>
+    </div>
+  </section>
+
+  <section class="section" id="top-finds">
+    <div class="section-inner">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Resibo ng Linggo</p>
+          <h2>Top Finds Ngayong Linggo</h2>
+        </div>
+        <p class="section-sub">Hand-picked, presyo-checked, sulit-approved. In-update tuwing Lunes.</p>
+      </div>
+
+      <div class="receipt-grid">
+
+        <div class="receipt">
+          <div class="receipt-photo">
+            <span class="stamp">SULIT!</span>
+            [ product photo ]
+          </div>
+          <div class="receipt-body">
+            <h3>Oversized Linen Polo</h3>
+            <p>Breathable para sa PH heat, true-to-size, at maganda ang drape. Best seller sa TikTok ngayong buwan.</p>
+            <div class="price-list">
+              <div class="price-row best"><span class="plat">TikTok Shop<span class="best-badge">BEST</span></span><span class="amt">₱389</span></div>
+              <div class="price-row"><span class="plat">Shopee</span><span class="amt">₱449</span></div>
+              <div class="price-row"><span class="plat">Lazada</span><span class="amt">₱459</span></div>
+              <div class="price-row"><span class="plat">Shein</span><span class="amt">₱410</span></div>
+            </div>
+          </div>
+          <div class="receipt-foot">
+            <span class="price" style="font-size:11px; color:var(--ink-soft);">4 platforms checked</span>
+            <a href="#">Shop Now →</a>
+          </div>
+        </div>
+
+        <div class="receipt">
+          <div class="receipt-photo">[ product photo ]</div>
+          <div class="receipt-body">
+            <h3>Mini Crossbody Bag</h3>
+            <p>Sturdy strap, may laman for phone + wallet + lippie. Available sa 6 colors.</p>
+            <div class="price-list">
+              <div class="price-row"><span class="plat">Shopee</span><span class="amt">₱299</span></div>
+              <div class="price-row best"><span class="plat">Lazada<span class="best-badge">BEST</span></span><span class="amt">₱259</span></div>
+              <div class="price-row"><span class="plat">TikTok Shop</span><span class="amt">₱285</span></div>
+              <div class="price-row"><span class="plat">Shein</span><span class="amt">₱270</span></div>
+            </div>
+          </div>
+          <div class="receipt-foot">
+            <span class="price" style="font-size:11px; color:var(--ink-soft);">4 platforms checked</span>
+            <a href="#">Shop Now →</a>
+          </div>
+        </div>
+
+        <div class="receipt">
+          <div class="receipt-photo">[ product photo ]</div>
+          <div class="receipt-body">
+            <h3>UV Protection Umbrella</h3>
+            <p>Anti-UV coating, mabilis matuyo, compact fold. Panalo lalo na ngayong tag-init.</p>
+            <div class="price-list">
+              <div class="price-row"><span class="plat">Shopee</span><span class="amt">₱199</span></div>
+              <div class="price-row"><span class="plat">Lazada</span><span class="amt">₱219</span></div>
+              <div class="price-row best"><span class="plat">TikTok Shop<span class="best-badge">BEST</span></span><span class="amt">₱179</span></div>
+              <div class="price-row"><span class="plat">Shein</span><span class="amt">₱195</span></div>
+            </div>
+          </div>
+          <div class="receipt-foot">
+            <span class="price" style="font-size:11px; color:var(--ink-soft);">4 platforms checked</span>
+            <a href="#">Shop Now →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="section-inner">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Mag-browse</p>
+          <h2>Piliin ang Kategorya</h2>
+        </div>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-card" id="fashion"><span class="cat-emoji">👗</span><span class="label">FASHION</span></div>
+        <div class="cat-card" id="beauty"><span class="cat-emoji">💄</span><span class="label">BEAUTY</span></div>
+        <div class="cat-card" id="home"><span class="cat-emoji">🏠</span><span class="label">HOME</span></div>
+        <div class="cat-card" id="gadgets"><span class="cat-emoji">📱</span><span class="label">GADGETS</span></div>
+        <div class="cat-card" id="sale"><span class="cat-emoji">🔥</span><span class="label">SALE ALERTS</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sale-band">
+    <p class="eyebrow">Live Ngayon</p>
+    <h2>Shopee 8.8 Sale — Huwag Kalimutan Ito</h2>
+    <p>Na-curate na namin ang mga dapat mong i-cart bago matapos ang promo period. I-check bago maubusan ng stock.</p>
+    <a href="#" class="btn">Tingnan ang Sale Picks →</a>
+  </section>
+
+  <section class="about">
+    <div class="about-inner">
+      <h2>Bakit Sulit Finds?</h2>
+      <p>Hindi kami affiliated sa kahit anong platform — kaya walang paboritism. Ang layunin lang namin, matulungan kang makahanap ng pinaka-sulit na deal saan man ito available, Shopee man o Lazada o TikTok Shop o Shein.</p>
+      <p>Sulit Finds is brought to you by Eveaya — kaya kung pamilyar ka na sa amin sa Facebook, ito na ang bago naming home para sa weekly deal comparisons.</p>
+      <div class="disclosure">
+        May mga affiliate link sa site na ito. Kapag bumili ka gamit ang mga link namin, maaari kaming makatanggap ng maliit na commission — walang extra cost sa'yo.
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="logo-text" style="font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:22px;">Sulit Finds <span style="font-style:normal; font-weight:500; font-size:14px; opacity:0.75;">by Eveaya</span></div>
+    <p>PRESYO-CHECKED SINCE 2026 · SHOPEE · LAZADA · TIKTOK SHOP · SHEIN</p>
+  </footer>
+
+</body>
+</html>
