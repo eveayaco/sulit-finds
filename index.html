@@ -238,7 +238,7 @@
     box-shadow:0 18px 34px rgba(126,90,74,0.20);
   }
   .receipt-photo{
-    height:170px;
+    height:210px;
     background:linear-gradient(135deg, var(--blush) 0%, var(--cream-deep) 100%);
     display:flex;
     align-items:center;
@@ -249,7 +249,10 @@
     overflow:hidden;
   }
   .receipt-photo img{
-    object-position:top center;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center;
   }
   .stamp{
     position:absolute;
@@ -475,8 +478,8 @@
       <div class="receipt-grid">
 
         <div class="receipt">
-          <div class="receipt-photo" style="background:none; padding:0;">
-            <img src="elsa-tank-shorts.png" alt="Sunny&Co Elsa Knitted Printed Tank Top & Track Shorts" style="width:100%; height:100%; object-fit:cover;">
+          <div class="receipt-photo">
+            <img src="elsa-tank-shorts.png" alt="Sunny&Co Elsa Knitted Printed Tank Top & Track Shorts" style="width:100%; height:100%; object-fit:contain;">
           </div>
           <div class="receipt-body">
             <h3>Sunny&amp;Co Elsa Tank &amp; Shorts Set</h3>
@@ -495,8 +498,8 @@
         </div>
 
         <div class="receipt">
-          <div class="receipt-photo" style="background:none; padding:0;">
-            <img src="lazada-tote-bag.png" alt="BOSTANTEN Tote Bag with Drawstring" style="width:100%; height:100%; object-fit:cover;">
+          <div class="receipt-photo">
+            <img src="lazada-tote-bag.png" alt="BOSTANTEN Tote Bag with Drawstring" style="width:100%; height:100%; object-fit:contain;">
           </div>
           <div class="receipt-body">
             <h3>BOSTANTEN Drawstring Tote Bag</h3>
@@ -515,8 +518,8 @@
         </div>
 
         <div class="receipt">
-          <div class="receipt-photo" style="background:none; padding:0;">
-            <img src="tiktok-umbrella.png" alt="Automatic UV Protection Folding Umbrella" style="width:100%; height:100%; object-fit:cover;">
+          <div class="receipt-photo">
+            <img src="tiktok-umbrella.png" alt="Automatic UV Protection Folding Umbrella" style="width:100%; height:100%; object-fit:contain;">
           </div>
           <div class="receipt-body">
             <h3>Automatic UV Protection Umbrella</h3>
@@ -535,8 +538,8 @@
         </div>
 
         <div class="receipt">
-          <div class="receipt-photo" style="background:none; padding:0;">
-            <img src="shein-slippers.png" alt="Ximi Ruo Korean Style Casual Flat Slippers" style="width:100%; height:100%; object-fit:cover;">
+          <div class="receipt-photo">
+            <img src="shein-slippers.png" alt="Ximi Ruo Korean Style Casual Flat Slippers" style="width:100%; height:100%; object-fit:contain;">
           </div>
           <div class="receipt-body">
             <h3>Ximi Ruo Korean Style Flat Slippers</h3>
