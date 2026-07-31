@@ -184,7 +184,34 @@
     background:#fff;
     color:var(--ink);
     box-shadow:0 4px 12px rgba(126,90,74,0.10);
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease, transform .15s ease;
   }
+  .platform-chip:hover{transform:translateY(-2px);}
+  .platform-chip.active{background:var(--sage); color:#fff;}
+  .cat-card{cursor:pointer;}
+  .cat-card.active{background:var(--blush-deep); color:#fff;}
+  .cat-card.active .label{color:#fff;}
+  .filter-status{
+    text-align:center;
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin:-10px 0 24px;
+    display:none;
+  }
+  .filter-status.visible{display:block;}
+  .filter-status button{
+    background:none;
+    border:none;
+    color:var(--blush-deep);
+    font-weight:700;
+    cursor:pointer;
+    text-decoration:underline;
+    font-family:'Quicksand',sans-serif;
+    font-size:13px;
+  }
+  .receipt.hidden-by-filter{display:none;}
 
   /* ===== SECTION HEADER ===== */
   .section{padding:70px 24px;}
@@ -458,10 +485,10 @@
     <p>Kino-compare namin ang presyo ng trending finds sa Shopee, Lazada, TikTok Shop, at Shein — para hindi ka na kailangang mag-switch ng apps para malaman kung saan pinakamura.</p>
     <a href="#top-finds" class="btn">Tingnan ang Deals Ngayong Linggo →</a>
     <div class="platform-strip">
-      <span class="platform-chip">SHOPEE</span>
-      <span class="platform-chip">LAZADA</span>
-      <span class="platform-chip">TIKTOK SHOP</span>
-      <span class="platform-chip">SHEIN</span>
+      <span class="platform-chip" data-filter-plat="shopee">SHOPEE</span>
+      <span class="platform-chip" data-filter-plat="lazada">LAZADA</span>
+      <span class="platform-chip" data-filter-plat="tiktok">TIKTOK SHOP</span>
+      <span class="platform-chip" data-filter-plat="shein">SHEIN</span>
     </div>
   </section>
 
@@ -475,9 +502,11 @@
         <p class="section-sub">Hand-picked, presyo-checked, sulit-approved. In-update tuwing Lunes.</p>
       </div>
 
-      <div class="receipt-grid">
+      <p id="filter-status" class="filter-status">Showing: <span id="filter-label"></span> — <button onclick="clearFilters()">Ipakita Lahat</button></p>
 
-        <div class="receipt">
+      <div class="receipt-grid" id="receipt-grid">
+
+        <div class="receipt" data-category="fashion" data-platform="shopee">
           <div class="receipt-photo">
             <img src="elsa-tank-shorts.png" alt="Sunny&Co Elsa Knitted Printed Tank Top & Track Shorts" style="width:100%; height:100%; object-fit:contain;">
           </div>
@@ -497,7 +526,7 @@
           </div>
         </div>
 
-        <div class="receipt">
+        <div class="receipt" data-category="fashion" data-platform="lazada">
           <div class="receipt-photo">
             <img src="lazada-tote-bag.png" alt="BOSTANTEN Tote Bag with Drawstring" style="width:100%; height:100%; object-fit:contain;">
           </div>
@@ -517,7 +546,7 @@
           </div>
         </div>
 
-        <div class="receipt">
+        <div class="receipt" data-category="gadgets" data-platform="tiktok">
           <div class="receipt-photo">
             <img src="tiktok-umbrella.png" alt="Automatic UV Protection Folding Umbrella" style="width:100%; height:100%; object-fit:contain;">
           </div>
@@ -537,7 +566,7 @@
           </div>
         </div>
 
-        <div class="receipt">
+        <div class="receipt" data-category="fashion" data-platform="shein">
           <div class="receipt-photo">
             <img src="shein-slippers.png" alt="Ximi Ruo Korean Style Casual Flat Slippers" style="width:100%; height:100%; object-fit:contain;">
           </div>
@@ -570,11 +599,11 @@
         </div>
       </div>
       <div class="cat-grid">
-        <div class="cat-card" id="fashion"><span class="cat-emoji">👗</span><span class="label">FASHION</span></div>
-        <div class="cat-card" id="beauty"><span class="cat-emoji">💄</span><span class="label">BEAUTY</span></div>
-        <div class="cat-card" id="home"><span class="cat-emoji">🏠</span><span class="label">HOME</span></div>
-        <div class="cat-card" id="gadgets"><span class="cat-emoji">📱</span><span class="label">GADGETS</span></div>
-        <div class="cat-card" id="sale"><span class="cat-emoji">🔥</span><span class="label">SALE ALERTS</span></div>
+        <div class="cat-card" data-filter-cat="all" style="background:var(--ink); color:var(--cream);"><span class="cat-emoji">✨</span><span class="label" style="color:var(--cream);">LAHAT</span></div>
+        <div class="cat-card" data-filter-cat="fashion"><span class="cat-emoji">👗</span><span class="label">FASHION</span></div>
+        <div class="cat-card" data-filter-cat="beauty"><span class="cat-emoji">💄</span><span class="label">BEAUTY</span></div>
+        <div class="cat-card" data-filter-cat="home"><span class="cat-emoji">🏠</span><span class="label">HOME</span></div>
+        <div class="cat-card" data-filter-cat="gadgets"><span class="cat-emoji">📱</span><span class="label">GADGETS</span></div>
       </div>
     </div>
   </section>
@@ -603,6 +632,68 @@
     <div class="logo-text" style="font-family:'Fraunces',serif; font-style:italic; font-weight:600; font-size:22px;">Sulit Finds <span style="font-style:normal; font-weight:500; font-size:14px; opacity:0.75;">by Eveaya</span></div>
     <p>PRESYO-CHECKED SINCE 2026 · SHOPEE · LAZADA · TIKTOK SHOP · SHEIN</p>
   </footer>
+  <script>
+    const catLabels = {fashion:'Fashion', beauty:'Beauty', home:'Home', gadgets:'Gadgets'};
+    const platLabels = {shopee:'Shopee', lazada:'Lazada', tiktok:'TikTok Shop', shein:'Shein'};
+    let activeCat = 'all';
+    let activePlat = null;
+
+    function applyFilters(){
+      const cards = document.querySelectorAll('#receipt-grid .receipt');
+      cards.forEach(card => {
+        const cat = card.dataset.category;
+        const plat = card.dataset.platform;
+        const catMatch = (activeCat === 'all') || (cat === activeCat);
+        const platMatch = (!activePlat) || (plat === activePlat);
+        card.classList.toggle('hidden-by-filter', !(catMatch && platMatch));
+      });
+
+      // update active states
+      document.querySelectorAll('.cat-card').forEach(el => {
+        el.classList.toggle('active', el.dataset.filterCat === activeCat);
+      });
+      document.querySelectorAll('.platform-chip').forEach(el => {
+        el.classList.toggle('active', el.dataset.filterPlat === activePlat);
+      });
+
+      // update status bar
+      const statusEl = document.getElementById('filter-status');
+      const labelEl = document.getElementById('filter-label');
+      const parts = [];
+      if(activeCat !== 'all') parts.push(catLabels[activeCat]);
+      if(activePlat) parts.push(platLabels[activePlat]);
+      if(parts.length){
+        labelEl.textContent = parts.join(' · ');
+        statusEl.classList.add('visible');
+      } else {
+        statusEl.classList.remove('visible');
+      }
+    }
+
+    function clearFilters(){
+      activeCat = 'all';
+      activePlat = null;
+      applyFilters();
+      document.getElementById('top-finds').scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    document.querySelectorAll('.cat-card').forEach(el => {
+      el.addEventListener('click', () => {
+        activeCat = el.dataset.filterCat;
+        applyFilters();
+        document.getElementById('top-finds').scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    document.querySelectorAll('.platform-chip').forEach(el => {
+      el.addEventListener('click', () => {
+        const val = el.dataset.filterPlat;
+        activePlat = (activePlat === val) ? null : val;
+        applyFilters();
+        document.getElementById('top-finds').scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+  </script>
 
 </body>
 </html>
